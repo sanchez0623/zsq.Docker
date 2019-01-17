@@ -1,0 +1,67 @@
+Docker安装Mysql
+1.拉取镜像
+ docker pull mysql/mysql-server
+2.运行mysql
+docker run -d -p 3306:3306 --name [Name] [ImageName]
+//示例
+docker run -d -p 3306:3306 --name mysql01 mysql/mysql-server
+3.进入容器
+docker exec -it [ContainerName] bash
+//示例
+docker exec -it mysql01 bash
+4.进入mysql的命令行
+命令行进入mysql的root账户：
+mysql -uroot -p
+这时候操作mysql会报错 ，让修改密码 请看 常见错误解决模块
+
+
+创建新用户
+mysql> CREATE USER 'test'@'localhost' IDENTIFIED BY 'pwd123456';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'test'@'localhost' WITH GRANT OPTION;
+mysql> CREATE USER 'test'@'%' IDENTIFIED BY 'pwd123456';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'test'@'%' WITH GRANT OPTION;
+
+
+修改MYSQL 默认字符集
+添加到my.cnf 
+[mysqld]
+character-set-server=utf8
+[client]
+default-character-set=utf8 
+[mysql]
+default-character-set=utf8
+查看字符集命令
+show variables like '%char%';s
+
+
+docker容器参数启动Mysql (用容器参数添加新用户和修改root账户密码，修改字符集)
+直接复制这个就可以了
+docker run -d -p 3306:3306 -e MYSQL_USER="test" -e MYSQL_PASSWORD="password" -e MYSQL_ROOT_PASSWORD="password" --name [Name] [ImageName] --character-set-server=utf8 --collation-server=utf8_general_ci
+
+这个和上面一样只不过用换行整理过（不要复制这个，用不了）
+docker run -d -p 3306:3306 
+-e MYSQL_USER="test" 
+-e MYSQL_PASSWORD="password" 
+-e MYSQL_ROOT_PASSWORD="password" 
+--name [Name] [ImageName] 
+--character-set-server=utf8 
+--collation-server=utf8_general_ci
+
+
+改密码语句
+mysql5.7版本语法：
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('password');
+mysql5.7之后版本语法：
+ALTER user 'root'@'localhost' IDENTIFIED BY 'password'
+
+
+docker在centos7上的升级
+https://www.jianshu.com/p/b3bf647a726e
+
+
+
+用外部mount （常用，单机/集群）
+
+
+用外部volume （单机）
+docker run -d -p 3306:3306 --name mysql01 -v=/docker/mysql/config/my.cnf:/etc/my.cnf -v=/docker/mysql/config/data:/var/lib/mysql mysql/mysql-server 
