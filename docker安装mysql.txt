@@ -65,3 +65,9 @@ https://www.jianshu.com/p/b3bf647a726e
 
 用外部volume （单机）
 docker run -d -p 3306:3306 --name mysql01 -v=/docker/mysql/config/my.cnf:/etc/my.cnf -v=/docker/mysql/config/data:/var/lib/mysql mysql/mysql-server 
+
+
+mongo挂载资料卷
+docker run -d -p 27017:27017 --name mongo01 -v /docker/mongo/config:/data/configdb -v /docker/mongo/db:/data/db mongo
+
+

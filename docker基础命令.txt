@@ -1,0 +1,17 @@
+docker --version
+
+docker pull imageName //pull一个镜像
+
+docker images  //查看已pull的镜像
+
+doeker run -d -p 6379:6379 --name runningName imageName
+-d表示detach，在后台运行
+
+docker ps //查看正在运行的容器
+
+docker stop/start runningName
+
+docker logs runningName
+
+docker exec -it runningName bash //进入bash命令
+// -it 是干嘛的？？	

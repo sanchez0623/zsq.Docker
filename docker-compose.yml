@@ -1,0 +1,25 @@
+version: '1.0'
+
+services:
+  db:
+    image: mysql/mysql-server
+    container_name: db
+    command: mysqld --character-set-server=utf8 --collation-server=ut8_general_ci
+    restart: always
+    ports:
+      # 这样会访问不了3306端口 - "3306"
+      # 要使用下面这样
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pwd123456
+      MYSQL_USER: sanchez
+      MYSQL_PASSWORD: pwd123456
+    volumes:
+      - /d/docker/beta/mysql-init:/docker-entrypoint-initdb.d
+  web:
+    build: .
+    container_name: aspnetcore
+    ports:
+      - "8002:80"
+    depends_on:
+      - db

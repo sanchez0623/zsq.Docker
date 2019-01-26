@@ -1,0 +1,11 @@
+docker network create -d bridge [name]
+
+docker network ls
+
+docker network connect [name] [imagename]
+
+
+docker run -d --net [bridgename] --name 
+
+
+docker inspect [imagename]

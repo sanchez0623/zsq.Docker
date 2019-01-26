@@ -1,0 +1,20 @@
+docker build [options] <path|URL>
+
+Dcokerfile√¸¡Ó
+œÍº˚£∫
+https://yeasy.gitbooks.io/docker_practice/content/image/dockerfile/
+
+FROM
+COPY/ADD
+RUN/CMD
+ENTRYPOINT
+ENV
+EXPOSE
+WORKDIR
+
+
+Œ¢»Ì≥£”√
+microsoft/dotnet
+microsoft/dotnet:sdk
+microsoft/dotnet:<version>-runtime
+microsoft/dotnet:<version>-runtime
